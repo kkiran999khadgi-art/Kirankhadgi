@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kiran Khadgi — Product & DesignOps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0B1623;
+    --navy2: #111f31;
+    --panel: #0F1E2E;
+    --blue: #2D7DD2;
+    --blue-soft: #4A9EBF;
+    --ice: #C8E6F5;
+    --white: #F0F4F8;
+    --muted: #7A92A8;
+    --border: rgba(255,255,255,0.07);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--navy); color: var(--white); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; opacity: 0.4; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 4rem; background: rgba(11,22,35,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); z-index: 100; }
+  .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--white); text-decoration: none; }
+  .nav-right { display: flex; align-items: center; gap: 2rem; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--white); }
+
+  /* LANG TOGGLE */
+  .lang-toggle { display: flex; background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 100px; padding: 3px; gap: 2px; }
+  .lang-btn { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; padding: 4px 12px; border-radius: 100px; border: none; cursor: pointer; background: transparent; color: var(--muted); transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+  .lang-btn.active { background: var(--blue); color: #fff; }
+
+  /* HERO */
+  #hero { min-height: 100vh; display: flex; align-items: center; padding: 8rem 4rem 6rem; position: relative; overflow: hidden; }
+  .hero-grid-bg { position: absolute; inset: 0; background-image: linear-gradient(rgba(45,125,210,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(45,125,210,0.04) 1px, transparent 1px); background-size: 60px 60px; pointer-events: none; }
+  .hero-glow { position: absolute; top: -200px; right: -100px; width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(circle, rgba(45,125,210,0.08) 0%, transparent 70%); pointer-events: none; }
+  .hero-content { position: relative; z-index: 1; max-width: 780px; }
+  .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(45,125,210,0.12); border: 1px solid rgba(45,125,210,0.3); color: var(--blue-soft); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 14px; border-radius: 100px; margin-bottom: 2rem; animation: fadeUp 0.6s ease both; }
+  .hero-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue-soft); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  h1.hero-name { font-family: 'DM Serif Display', serif; font-size: clamp(3.5rem, 8vw, 6.5rem); line-height: 1.0; color: var(--white); letter-spacing: -0.02em; margin-bottom: 0.5rem; animation: fadeUp 0.6s 0.1s ease both; }
+  h1.hero-name em { font-style: italic; color: var(--blue-soft); }
+  .hero-role { font-size: 1.05rem; color: var(--muted); font-weight: 300; letter-spacing: 0.04em; margin-bottom: 1.8rem; animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-desc { font-size: 1rem; color: var(--muted); max-width: 560px; line-height: 1.8; margin-bottom: 2.5rem; animation: fadeUp 0.6s 0.3s ease both; }
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.6s 0.4s ease both; }
+  .btn-primary { background: var(--blue); color: #fff; padding: 0.75rem 1.8rem; border-radius: 6px; text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: background 0.2s, transform 0.15s; }
+  .btn-primary:hover { background: #3A8FE0; transform: translateY(-1px); }
+  .btn-ghost { border: 1px solid rgba(255,255,255,0.15); color: var(--white); padding: 0.75rem 1.8rem; border-radius: 6px; text-decoration: none; font-size: 0.88rem; font-weight: 400; transition: border-color 0.2s, transform 0.15s; }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.4); transform: translateY(-1px); }
+  .hero-stats { display: flex; gap: 3rem; margin-top: 4rem; animation: fadeUp 0.6s 0.5s ease both; }
+  .stat-num { font-family: 'DM Serif Display', serif; font-size: 2.2rem; color: var(--white); line-height: 1; }
+  .stat-label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+
+  /* SECTIONS */
+  section { padding: 7rem 4rem; position: relative; z-index: 1; }
+  .section-label { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue-soft); margin-bottom: 0.8rem; }
+  .section-title { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 3rem); color: var(--white); line-height: 1.15; margin-bottom: 1rem; }
+  .section-sub { color: var(--muted); max-width: 560px; font-size: 0.95rem; margin-bottom: 4rem; }
+  .divider { height: 1px; background: var(--border); margin: 0 4rem; }
+
+  /* ABOUT */
+  #about { background: var(--panel); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .about-text p { color: var(--muted); font-size: 0.95rem; line-height: 1.9; margin-bottom: 1.2rem; }
+  .about-text p strong { color: var(--white); font-weight: 500; }
+  .about-facts { display: flex; flex-direction: column; gap: 1px; }
+  .fact-row { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+  .fact-key { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .fact-val { font-size: 0.9rem; color: var(--white); font-weight: 400; text-align: right; }
+  .lang-tag { display: inline-block; font-size: 0.75rem; background: rgba(45,125,210,0.12); border: 1px solid rgba(45,125,210,0.2); color: var(--blue-soft); padding: 3px 10px; border-radius: 100px; margin-left: 6px; }
+
+  /* EXPERIENCE */
+  .exp-list { display: flex; flex-direction: column; }
+  .exp-item { display: grid; grid-template-columns: 200px 1fr; gap: 2rem; padding: 2.5rem 0; border-top: 1px solid var(--border); cursor: pointer; }
+  .exp-item:last-child { border-bottom: 1px solid var(--border); }
+  .exp-dates { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.04em; margin-bottom: 0.4rem; }
+  .exp-company { font-size: 0.82rem; color: var(--blue-soft); font-weight: 500; }
+  .exp-header { display: flex; align-items: flex-start; justify-content: space-between; }
+  .exp-title { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--white); margin-bottom: 0.6rem; }
+  .exp-toggle { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 1.1rem; flex-shrink: 0; transition: all 0.2s; margin-top: 4px; user-select: none; }
+  .exp-item.open .exp-toggle { background: var(--blue); border-color: var(--blue); color: #fff; transform: rotate(45deg); }
+  .exp-intro { color: var(--muted); font-size: 0.9rem; }
+  .exp-bullets { display: none; margin-top: 1.2rem; flex-direction: column; gap: 0.6rem; }
+  .exp-item.open .exp-bullets { display: flex; }
+  .exp-bullet { display: flex; gap: 10px; align-items: flex-start; font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+  .exp-bullet::before { content: '→'; color: var(--blue-soft); font-size: 0.8rem; flex-shrink: 0; margin-top: 3px; }
+  .exp-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
+  .exp-tag { font-size: 0.72rem; padding: 4px 10px; border-radius: 100px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* SKILLS */
+  #skills { background: var(--panel); }
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .skill-group { background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 2rem; transition: background 0.2s; }
+  .skill-group:hover { background: rgba(255,255,255,0.04); }
+  .skill-group-icon { font-size: 1.4rem; margin-bottom: 1rem; width: 44px; height: 44px; border-radius: 10px; background: rgba(45,125,210,0.12); display: flex; align-items: center; justify-content: center; }
+  .skill-group-title { font-weight: 500; font-size: 0.9rem; color: var(--white); margin-bottom: 1rem; }
+  .skill-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-pill { font-size: 0.76rem; padding: 5px 12px; border-radius: 100px; background: rgba(45,125,210,0.08); border: 1px solid rgba(45,125,210,0.2); color: var(--ice); }
+
+  /* CONTACT */
+  #contact { text-align: center; }
+  .contact-inner { max-width: 600px; margin: 0 auto; }
+  .contact-email { font-family: 'DM Serif Display', serif; font-size: clamp(1.6rem, 4vw, 2.6rem); color: var(--white); text-decoration: none; border-bottom: 2px solid var(--blue); padding-bottom: 4px; transition: color 0.2s; }
+  .contact-email:hover { color: var(--blue-soft); }
+  .contact-links { display: flex; justify-content: center; gap: 2rem; margin-top: 2.5rem; }
+  .contact-link { font-size: 0.8rem; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+  .contact-link:hover { color: var(--white); }
+
+  footer { padding: 2rem 4rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; color: var(--muted); position: relative; z-index: 1; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    #hero, section { padding: 5rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.4rem; }
+    footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    .divider { margin: 0 1.5rem; }
+    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">Kiran Khadgi</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#about" data-en="About" data-de="Über mich">About</a></li>
+      <li><a href="#experience" data-en="Experience" data-de="Erfahrung">Experience</a></li>
+      <li><a href="#skills" data-en="Skills" data-de="Fähigkeiten">Skills</a></li>
+      <li><a href="#contact" data-en="Contact" data-de="Kontakt">Contact</a></li>
+    </ul>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('de')">DE</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-tag">
+      <span class="hero-dot"></span>
+      <span data-en="Open to full-time roles · Pforzheim, Germany" data-de="Offen für Vollzeitstellen · Pforzheim, Deutschland">Open to full-time roles · Pforzheim, Germany</span>
+    </div>
+    <h1 class="hero-name">Kiran<br><em>Khadgi</em></h1>
+    <p class="hero-role">Product Management &nbsp;·&nbsp; UX DesignOps &nbsp;·&nbsp; SAP SE</p>
+    <p class="hero-desc" data-en="Building products that bridge people and technology. Currently at SAP SE driving AI-driven UX workflows, with an MBA in International Management from Hochschule Pforzheim." data-de="Ich entwickle Produkte, die Menschen und Technologie verbinden. Derzeit bei SAP SE für KI-gestützte UX-Workflows verantwortlich — MBA in International Management an der Hochschule Pforzheim.">Building products that bridge people and technology. Currently at SAP SE driving AI-driven UX workflows, with an MBA in International Management from Hochschule Pforzheim.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary" data-en="Get in touch" data-de="Kontakt aufnehmen">Get in touch</a>
+      <a href="#experience" class="btn-ghost" data-en="View experience" data-de="Erfahrung ansehen">View experience</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">6+</div>
+        <div class="stat-label" data-en="Years of experience" data-de="Jahre Erfahrung">Years of experience</div>
+      </div>
+      <div>
+        <div class="stat-num">4k+</div>
+        <div class="stat-label" data-en="Units sold as founder" data-de="Verkaufte Einheiten">Units sold as founder</div>
+      </div>
+      <div>
+        <div class="stat-num">200+</div>
+        <div class="stat-label" data-en="Clients managed" data-de="Betreute Kunden">Clients managed</div>
+      </div>
+      <div>
+        <div class="stat-num">65%</div>
+        <div class="stat-label" data-en="Issue backlog reduced" data-de="Rückstand reduziert">Issue backlog reduced</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label reveal" data-en="About" data-de="Über mich">About</div>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <div class="section-title" style="margin-bottom:1.5rem">
+        <span data-en="Bridging product" data-de="Produkt-Denken">Bridging product</span><br>
+        <em style="font-family:'DM Serif Display',serif;font-style:italic;color:var(--blue-soft)" data-en="thinking and design" data-de="und Design verbinden">thinking and design</em>
+      </div>
+      <p data-en="I'm a product and DesignOps professional currently working at <strong>SAP SE in Walldorf</strong>, where I design AI-driven product flows, produce user journey maps, and work within the SAP Fiori / UI5 and FX toolkit to deliver sprint-ready specs." data-de="Ich bin ein Product- und DesignOps-Profi, der derzeit bei <strong>SAP SE in Walldorf</strong> arbeitet. Dort gestalte ich KI-gestützte Product Flows, erstelle User Journey Maps und arbeite im SAP Fiori / UI5- und FX-Toolkit, um sprint-fertige Spezifikationen zu liefern.">I'm a product and DesignOps professional currently working at <strong>SAP SE in Walldorf</strong>, where I design AI-driven product flows, produce user journey maps, and work within the SAP Fiori / UI5 and FX toolkit to deliver sprint-ready specs.</p>
+      <p data-en="Before SAP, I co-founded <strong>Juttaholic</strong> — a D2C sneaker brand in Nepal that I scaled to 4,000+ sales in 18 months through end-to-end product ownership, from sourcing strategy to digital campaigns." data-de="Vor SAP gründete ich <strong>Juttaholic</strong> — eine D2C-Sneaker-Marke in Nepal, die ich in 18 Monaten auf über 4.000 Verkäufe skaliert habe — von der Sourcing-Strategie bis hin zu digitalen Kampagnen.">Before SAP, I co-founded <strong>Juttaholic</strong> — a D2C sneaker brand in Nepal that I scaled to 4,000+ sales in 18 months through end-to-end product ownership, from sourcing strategy to digital campaigns.</p>
+      <p data-en="I'm pursuing an <strong>MBA in International Management</strong> at Hochschule Pforzheim and looking for a full-time PM or DesignOps role where I can own product outcomes in an ambitious, international team." data-de="Ich absolviere einen <strong>MBA in International Management</strong> an der Hochschule Pforzheim und suche eine Vollzeitstelle als PM oder im DesignOps-Bereich, um in einem ambitionierten, internationalen Team Produktergebnisse zu verantworten.">I'm pursuing an <strong>MBA in International Management</strong> at Hochschule Pforzheim and looking for a full-time PM or DesignOps role where I can own product outcomes in an ambitious, international team.</p>
+    </div>
+    <div>
+      <div class="about-facts">
+        <div class="fact-row">
+          <span class="fact-key" data-en="Location" data-de="Standort">Location</span>
+          <span class="fact-val" data-en="Pforzheim, Germany" data-de="Pforzheim, Deutschland">Pforzheim, Germany</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact-key" data-en="Currently" data-de="Aktuell">Currently</span>
+          <span class="fact-val" data-en="SAP SE — Working Student, DesignOps" data-de="SAP SE — Werkstudent, DesignOps">SAP SE — Working Student, DesignOps</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact-key" data-en="Education" data-de="Ausbildung">Education</span>
+          <span class="fact-val" data-en="MBA · Hochschule Pforzheim" data-de="MBA · Hochschule Pforzheim">MBA · Hochschule Pforzheim</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact-key" data-en="Available" data-de="Verfügbar">Available</span>
+          <span class="fact-val" data-en="Sep 2026 (full-time)" data-de="Sep 2026 (Vollzeit)">Sep 2026 (full-time)</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact-key" data-en="Languages" data-de="Sprachen">Languages</span>
+          <span class="fact-val">
+            English <span class="lang-tag">C1</span>
+            German <span class="lang-tag">B1</span>
+            Nepali <span class="lang-tag" data-en="Native" data-de="Muttersprache">Native</span>
+          </span>
+        </div>
+        <div class="fact-row">
+          <span class="fact-key">Email</span>
+          <span class="fact-val"><a href="mailto:Kkiran999khadgi@gmail.com" style="color:var(--blue-soft);text-decoration:none">Kkiran999khadgi@gmail.com</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label reveal" data-en="Experience" data-de="Berufserfahrung">Experience</div>
+  <div class="section-title reveal" data-en="Where I've worked" data-de="Meine Stationen">Where I've worked</div>
+  <p class="section-sub reveal" data-en="Click any role to expand details." data-de="Klicken Sie auf eine Stelle, um Details anzuzeigen.">Click any role to expand details.</p>
+
+  <div class="exp-list">
+
+    <div class="exp-item open reveal" onclick="toggleExp(this)">
+      <div class="exp-meta">
+        <div class="exp-dates">Dec 2025 — Present</div>
+        <div class="exp-company">SAP SE · Walldorf</div>
+      </div>
+      <div class="exp-main">
+        <div class="exp-header">
+          <div class="exp-title" data-en="Working Student — DesignOps, UX Product Design" data-de="Werkstudent — DesignOps, UX Produktdesign">Working Student — DesignOps, UX Product Design</div>
+          <div class="exp-toggle">+</div>
+        </div>
+        <div class="exp-intro" data-en="Designing AI-driven product experiences within SAP's enterprise DesignOps function." data-de="Gestaltung KI-gesteuerter Produkterlebnisse innerhalb der DesignOps-Funktion von SAP.">Designing AI-driven product experiences within SAP's enterprise DesignOps function.</div>
+        <div class="exp-bullets">
+          <div class="exp-bullet" data-en="Produced 3+ user journey maps and UI process flows in Figma and Miro for Joule Agent and AI orchestration use cases, directly shaping product decisions." data-de="Erstellte 3+ User Journey Maps und UI-Prozessflows in Figma und Miro für Joule Agent- und KI-Orchestrierungsfälle, die Produktentscheidungen direkt beeinflussten.">Produced 3+ user journey maps and UI process flows in Figma and Miro for Joule Agent and AI orchestration use cases, directly shaping product decisions.</div>
+          <div class="exp-bullet" data-en="Translated UX research into component-level specs within the SAP Fiori / UI5 and FX toolkit, delivering sprint-ready designs aligned with engineering constraints." data-de="UX-Forschungsergebnisse in komponentenbasierte Spezifikationen im SAP Fiori / UI5- und FX-Toolkit übersetzt, sprint-fertige Designs geliefert.">Translated UX research into component-level specs within the SAP Fiori / UI5 and FX toolkit, delivering sprint-ready designs aligned with engineering constraints.</div>
+          <div class="exp-bullet" data-en="Redesigned the SharePoint documentation workspace for a 200+ member internal team, reducing content discovery time and improving cross-team alignment." data-de="SharePoint-Dokumentationsbereich für ein 200+ köpfiges Team neu gestaltet, Auffindbarkeit verbessert und teamübergreifende Abstimmung optimiert.">Redesigned the SharePoint documentation workspace for a 200+ member internal team, reducing content discovery time and improving cross-team alignment.</div>
+          <div class="exp-bullet" data-en="Contributed to agentic UX design reviews, applying human-centred design principles to enterprise AI workflows." data-de="An agentischen UX-Design-Reviews mitgewirkt und menschzentrierte Designprinzipien auf KI-Workflows im Unternehmensumfeld angewendet.">Contributed to agentic UX design reviews, applying human-centred design principles to enterprise AI workflows.</div>
+        </div>
+        <div class="exp-tags">
+          <span class="exp-tag">Figma</span><span class="exp-tag">Miro</span><span class="exp-tag">SAP Fiori</span><span class="exp-tag">UI5</span><span class="exp-tag">DesignOps</span><span class="exp-tag">Joule AI</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item reveal" onclick="toggleExp(this)">
+      <div class="exp-meta">
+        <div class="exp-dates">Mar 2022 — Jun 2024</div>
+        <div class="exp-company">Juttaholic Pvt. Ltd · Nepal</div>
+      </div>
+      <div class="exp-main">
+        <div class="exp-header">
+          <div class="exp-title" data-en="Co-Founder" data-de="Mitgründer">Co-Founder</div>
+          <div class="exp-toggle">+</div>
+        </div>
+        <div class="exp-intro" data-en="Founded and scaled a D2C sneaker brand from zero — end-to-end product ownership." data-de="D2C-Sneaker-Marke von Grund auf gegründet und skaliert — vollständige Produktverantwortung.">Founded and scaled a D2C sneaker brand from zero — end-to-end product ownership.</div>
+        <div class="exp-bullets">
+          <div class="exp-bullet" data-en="Built from concept to 4,000+ unit sales within 18 months, owning product strategy, pricing, supply chain, and go-to-market execution." data-de="Vom Konzept bis zu 4.000+ Verkäufen in 18 Monaten — verantwortlich für Produktstrategie, Preisgestaltung, Supply Chain und Markteinführung.">Built from concept to 4,000+ unit sales within 18 months, owning product strategy, pricing, supply chain, and go-to-market execution.</div>
+          <div class="exp-bullet" data-en="Grew Instagram presence to 10k+ followers in year one through data-informed influencer partnerships and seasonal content campaigns." data-de="Instagram-Präsenz im ersten Jahr auf 10.000+ Follower ausgebaut — durch datengestützte Influencer-Kooperationen und saisonale Kampagnen.">Grew Instagram presence to 10k+ followers in year one through data-informed influencer partnerships and seasonal content campaigns.</div>
+          <div class="exp-bullet" data-en="Iterated product offerings based on customer feedback loops and sales analytics — core product management thinking in practice." data-de="Produktangebot auf Basis von Kundenfeedback und Verkaufsanalysen iteriert — Product Management in der Praxis.">Iterated product offerings based on customer feedback loops and sales analytics — core product management thinking in practice.</div>
+          <div class="exp-bullet" data-en="Managed end-to-end vendor relationships, negotiating terms that reduced procurement costs and improved delivery reliability." data-de="Lieferantenbeziehungen end-to-end gemanagt, Konditionen verhandelt, die Beschaffungskosten senkten und Lieferzuverlässigkeit verbesserten.">Managed end-to-end vendor relationships, negotiating terms that reduced procurement costs and improved delivery reliability.</div>
+        </div>
+        <div class="exp-tags">
+          <span class="exp-tag">Product Strategy</span><span class="exp-tag">Go-to-Market</span><span class="exp-tag">Growth</span><span class="exp-tag">D2C</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item reveal" onclick="toggleExp(this)">
+      <div class="exp-meta">
+        <div class="exp-dates">Dec 2023 — Mar 2024</div>
+        <div class="exp-company">Infodeveloper Pvt. Ltd · Nepal</div>
+      </div>
+      <div class="exp-main">
+        <div class="exp-header">
+          <div class="exp-title" data-en="Project Coordinator" data-de="Projektkoordinator">Project Coordinator</div>
+          <div class="exp-toggle">+</div>
+        </div>
+        <div class="exp-intro" data-en="Led FinTech platform coordination across 30+ stakeholders and 200+ financial institutions." data-de="Koordination einer FinTech-Plattform mit 30+ Stakeholdern und 200+ Finanzinstitutionen.">Led FinTech platform coordination across 30+ stakeholders and 200+ financial institutions.</div>
+        <div class="exp-bullets">
+          <div class="exp-bullet" data-en="Led coordination of FinTech platform 'Infinity' — managing alignment between engineers, analysts, and clients across 200+ microfinance institutions." data-de="Koordination der FinTech-Plattform 'Infinity' — Abstimmung zwischen Entwicklern, Analysten und Kunden in 200+ Mikrofinanzinstitutionen.">Led coordination of FinTech platform 'Infinity' — managing alignment between engineers, analysts, and clients across 200+ microfinance institutions.</div>
+          <div class="exp-bullet" data-en="Reduced issue backlog by 65% in 3 months by identifying workflow bottlenecks and improving Agile sprint practices in Azure DevOps." data-de="Issue-Backlog in 3 Monaten um 65% reduziert durch Identifikation von Engpässen und Verbesserung der Agile-Sprint-Prozesse in Azure DevOps.">Reduced issue backlog by 65% in 3 months by identifying workflow bottlenecks and improving Agile sprint practices in Azure DevOps.</div>
+          <div class="exp-bullet" data-en="Bridged business clients and engineering teams, converting stakeholder needs into clear requirement docs and product deliverables." data-de="Schnittstelle zwischen Geschäftskunden und Entwicklungsteams — Stakeholder-Anforderungen in klare Anforderungsdokumente und Produktliefergegenstände übersetzt.">Bridged business clients and engineering teams, converting stakeholder needs into clear requirement docs and product deliverables.</div>
+        </div>
+        <div class="exp-tags">
+          <span class="exp-tag">Azure DevOps</span><span class="exp-tag">Agile</span><span class="exp-tag">FinTech</span><span class="exp-tag">Stakeholder Mgmt</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item reveal" onclick="toggleExp(this)">
+      <div class="exp-meta">
+        <div class="exp-dates">Feb 2018 — Feb 2022</div>
+        <div class="exp-company">Tribal Ace Pvt. Ltd · Nepal</div>
+      </div>
+      <div class="exp-main">
+        <div class="exp-header">
+          <div class="exp-title" data-en="Managing Director" data-de="Geschäftsführer">Managing Director</div>
+          <div class="exp-toggle">+</div>
+        </div>
+        <div class="exp-intro" data-en="Ran a full-service marketing agency delivering campaigns for high-profile clients." data-de="Leitung einer Full-Service-Marketingagentur mit Kampagnen für namhafte Kunden.">Ran a full-service marketing agency delivering campaigns for high-profile clients.</div>
+        <div class="exp-bullets">
+          <div class="exp-bullet" data-en="Delivered 15+ integrated campaigns for clients including Mahindra-BAW, achieving a ~20% uplift in brand engagement." data-de="15+ integrierte Kampagnen für Kunden wie Mahindra-BAW umgesetzt — ca. 20% Steigerung des Markenengagements.">Delivered 15+ integrated campaigns for clients including Mahindra-BAW, achieving a ~20% uplift in brand engagement.</div>
+          <div class="exp-bullet" data-en="Managed a team of 5, delivering 100% of projects on time and within budget." data-de="Team von 5 Personen geführt — 100% der Projekte pünktlich und im Budget abgeliefert.">Managed a team of 5, delivering 100% of projects on time and within budget.</div>
+          <div class="exp-bullet" data-en="Negotiated vendor partnerships that cut campaign costs by 20% and improved delivery timelines by 15%." data-de="Lieferantenpartnerschaften verhandelt, die Kampagnenkosten um 20% senkten und Lieferzeiten um 15% verbesserten.">Negotiated vendor partnerships that cut campaign costs by 20% and improved delivery timelines by 15%.</div>
+        </div>
+        <div class="exp-tags">
+          <span class="exp-tag">Leadership</span><span class="exp-tag">Campaign Mgmt</span><span class="exp-tag">Budgeting</span><span class="exp-tag">Vendor Relations</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label reveal" data-en="Skills" data-de="Fähigkeiten">Skills</div>
+  <div class="section-title reveal" data-en="What I bring" data-de="Was ich mitbringe">What I bring</div>
+  <div class="section-sub reveal" data-en="Across product, design, and delivery." data-de="In den Bereichen Produkt, Design und Umsetzung.">Across product, design, and delivery.</div>
+  <div class="skills-grid reveal">
+    <div class="skill-group">
+      <div class="skill-group-icon">🗺️</div>
+      <div class="skill-group-title" data-en="Product & DesignOps" data-de="Produkt & DesignOps">Product & DesignOps</div>
+      <div class="skill-list">
+        <span class="skill-pill" data-en="Product Discovery" data-de="Produktentdeckung">Product Discovery</span>
+        <span class="skill-pill" data-en="User Journey Mapping" data-de="User Journey Mapping">User Journey Mapping</span>
+        <span class="skill-pill" data-en="UX Process Design" data-de="UX Prozessdesign">UX Process Design</span>
+        <span class="skill-pill" data-en="Roadmapping" data-de="Roadmapping">Roadmapping</span>
+        <span class="skill-pill" data-en="Requirements Gathering" data-de="Anforderungsanalyse">Requirements Gathering</span>
+        <span class="skill-pill" data-en="Sprint Planning" data-de="Sprint-Planung">Sprint Planning</span>
+        <span class="skill-pill" data-en="Wireframing" data-de="Wireframing">Wireframing</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-icon">🤝</div>
+      <div class="skill-group-title" data-en="Collaboration & Delivery" data-de="Zusammenarbeit & Lieferung">Collaboration & Delivery</div>
+      <div class="skill-list">
+        <span class="skill-pill" data-en="Stakeholder Management" data-de="Stakeholder-Management">Stakeholder Management</span>
+        <span class="skill-pill" data-en="Cross-functional Teams" data-de="Funktionsübergreifende Teams">Cross-functional Teams</span>
+        <span class="skill-pill" data-en="Agile / Scrum" data-de="Agile / Scrum">Agile / Scrum</span>
+        <span class="skill-pill" data-en="Business Strategy" data-de="Unternehmensstrategie">Business Strategy</span>
+        <span class="skill-pill" data-en="Process Optimisation" data-de="Prozessoptimierung">Process Optimisation</span>
+        <span class="skill-pill">CRM</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-icon">📊</div>
+      <div class="skill-group-title" data-en="Data & Analysis" data-de="Daten & Analyse">Data & Analysis</div>
+      <div class="skill-list">
+        <span class="skill-pill">Power BI</span>
+        <span class="skill-pill">SPSS</span>
+        <span class="skill-pill">Google Analytics</span>
+        <span class="skill-pill" data-en="Data-driven Decisions" data-de="Datengestützte Entscheidungen">Data-driven Decisions</span>
+        <span class="skill-pill" data-en="Performance Tracking" data-de="Leistungsverfolgung">Performance Tracking</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-icon">🎨</div>
+      <div class="skill-group-title" data-en="Design Tools" data-de="Design-Tools">Design Tools</div>
+      <div class="skill-list">
+        <span class="skill-pill">Figma</span>
+        <span class="skill-pill">Miro</span>
+        <span class="skill-pill">SAP Fiori / UI5</span>
+        <span class="skill-pill">SAP FX Toolkit</span>
+        <span class="skill-pill">Elementor</span>
+        <span class="skill-pill">WordPress</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-icon">⚙️</div>
+      <div class="skill-group-title" data-en="Project & Dev Tools" data-de="Projekt- & Entwicklungstools">Project & Dev Tools</div>
+      <div class="skill-list">
+        <span class="skill-pill">Jira</span>
+        <span class="skill-pill">Trello</span>
+        <span class="skill-pill">MS Azure DevOps</span>
+        <span class="skill-pill">SharePoint</span>
+        <span class="skill-pill">Google Suite</span>
+        <span class="skill-pill">MS Office</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-icon">🎓</div>
+      <div class="skill-group-title" data-en="Certifications" data-de="Zertifizierungen">Certifications</div>
+      <div class="skill-list">
+        <span class="skill-pill" data-en="SAP Certified – CX Solutions" data-de="SAP-Zertifiziert – CX Solutions">SAP Certified – CX Solutions</span>
+        <span class="skill-pill" data-en="SAP Joule AI Agents" data-de="SAP Joule KI-Agenten">SAP Joule AI Agents</span>
+        <span class="skill-pill" data-en="Agentic UX Design (SAP)" data-de="Agentisches UX-Design (SAP)">Agentic UX Design (SAP)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-label reveal" data-en="Contact" data-de="Kontakt">Contact</div>
+    <div class="section-title reveal" style="text-align:center;margin-bottom:1rem" data-en="Let's work together" data-de="Lass uns zusammenarbeiten">Let's work together</div>
+    <p class="section-sub reveal" style="margin:0 auto 3rem;text-align:center" data-en="Open to full-time Product Manager and DesignOps roles across Germany and internationally." data-de="Offen für Vollzeitstellen als Product Manager und im DesignOps-Bereich in Deutschland und international.">Open to full-time Product Manager and DesignOps roles across Germany and internationally.</p>
+    <div class="reveal">
+      <a href="mailto:Kkiran999khadgi@gmail.com" class="contact-email">Kkiran999khadgi@gmail.com</a>
+    </div>
+    <div class="contact-links reveal">
+      <a href="https://www.linkedin.com/in/kiran-khadgi-602b89172/" class="contact-link" target="_blank">LinkedIn ↗</a>
+      <a href="tel:+4917687364984" class="contact-link">+49 176 87364984</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Kiran Khadgi</span>
+  <span data-en="Product Management · UX DesignOps · Pforzheim, Germany" data-de="Produktmanagement · UX DesignOps · Pforzheim, Deutschland">Product Management · UX DesignOps · Pforzheim, Germany</span>
+</footer>
+
+<script>
+  let currentLang = 'en';
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('[data-en]').forEach(el => {
+      const text = el.getAttribute('data-' + lang);
+      if (!text) return;
+      if (el.querySelector('strong')) {
+        el.innerHTML = text;
+      } else {
+        el.textContent = text;
+      }
+    });
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelector('.lang-btn[onclick="setLang(\'' + lang + '\')"]').classList.add('active');
+    document.documentElement.lang = lang;
+  }
+
+  function toggleExp(el) { el.classList.toggle('open'); }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
